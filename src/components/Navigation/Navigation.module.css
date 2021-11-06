@@ -1,0 +1,13 @@
+.nav {
+}
+
+.link {
+}
+
+.navLink {
+  composes: link;
+}
+
+.activeNavLink {
+  composes: navLink;
+}

@@ -7,7 +7,7 @@ const BASE_URL = 'https://api.themoviedb.org';
 export async function fetchTrendingMovies() {
   try {
     const response = await fetch(
-      `${BASE_URL}/3/trending/movie/week?api_key=${API_KEY}`,
+      `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}`,
     );
     return response.ok
       ? await response.json()

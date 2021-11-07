@@ -3,18 +3,29 @@ import { Switch, Route } from 'react-router-dom';
 
 // components import
 import AppBar from './components/AppBar';
-import Container from './components/Container';
 
 // views import
-import { HomePage } from './views/HomePage';
+import HomePage from './views/HomePage';
+import MoviesPage from './views/MoviesPage';
+import MovieDetailsPage from './views/MovieDetailsPage';
 
 function App() {
-  // fetchTrendingMovies().then(resp => console.log(resp));
-
   return (
-    <Container>
+    <>
       <AppBar />
-    </Container>
+
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/movies" exact>
+          <MoviesPage />
+        </Route>
+        <Route path="/movies/:movieId">
+          <MovieDetailsPage />
+        </Route>
+      </Switch>
+    </>
   );
 }
 

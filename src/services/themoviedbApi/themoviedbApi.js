@@ -4,7 +4,7 @@ const BASE_URL = 'https://api.themoviedb.org';
 // function to fetch trending movies
 // https://developers.themoviedb.org/3/trending/get-trending
 
-export async function fetchTrendingMovies() {
+async function fetchTrendingMovies() {
   try {
     const response = await fetch(
       `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}`,
@@ -19,6 +19,12 @@ export async function fetchTrendingMovies() {
     );
   }
 }
+
+const movieApi = {
+  fetchTrendingMovies,
+};
+
+export default movieApi;
 
 // https://developers.themoviedb.org/3/search/search-movies - поиск кинофильма по ключевому слову на странице фильмов.
 // https://developers.themoviedb.org/3/movies/get-movie-details - запрос полной информации о фильме для страницы кинофильма.

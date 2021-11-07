@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default function Section({ children, title }) {
   return (
     <section className="section">
-      {title && <div className="sectionTitle">{title}</div>}
+      {title && <h2 className="sectionTitle">{title}</h2>}
       {children}
     </section>
   );
@@ -11,5 +11,5 @@ export default function Section({ children, title }) {
 
 Section.propTypes = {
   children: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

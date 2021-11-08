@@ -75,7 +75,7 @@ export default function MovieInfo({ movie }) {
 }
 MovieInfo.propTypes = {
   movie: PropTypes.shape({
-    poster_path: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
     original_title: PropTypes.string.isRequired,
     release_date: PropTypes.string.isRequired,
     tagline: PropTypes.string.isRequired,

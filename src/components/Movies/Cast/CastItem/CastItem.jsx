@@ -36,7 +36,7 @@ export default function CastItem({ actor: { profile_path, name, character } }) {
 
 CastItem.propTypes = {
   actor: PropTypes.shape({
-    profile_path: PropTypes.string.isRequired,
+    profile_path: PropTypes.string,
     name: PropTypes.string.isRequired,
     character: PropTypes.string.isRequired,
   }),

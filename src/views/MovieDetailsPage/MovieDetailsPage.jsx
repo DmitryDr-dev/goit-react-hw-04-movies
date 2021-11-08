@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Route,
   useLocation,
@@ -13,8 +13,15 @@ import Loader from '../../components/Loader';
 import MovieInfo from '../../components/Movies/MovieInfo';
 import Section from '../../components/Section';
 import Container from '../../components/Container';
-import Cast from '../../components/Movies/Cast';
-import Reviews from '../../components/Movies/Reviews';
+// import Cast from '../../components/Movies/Cast';
+// import Reviews from '../../components/Movies/Reviews';
+
+const Cast = lazy(() =>
+  import('../../components/Movies/Cast' /* webpackChunkName: "cast" */),
+);
+const Reviews = lazy(() =>
+  import('../../components/Movies/Reviews' /* webpackChunkName: "reviews" */),
+);
 
 const Status = {
   IDLE: 'idle',
@@ -31,27 +38,34 @@ export default function MovieDetailsPage() {
   const [status, setStatus] = useState(Status.IDLE);
   const [movie, setMovie] = useState([]);
 
-  // console.log(history);
   // console.log(location);
-  // console.log(movieId);
-  // console.log(url);
-  // console.log(path);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     try {
       setStatus(Status.PENDING);
-      movieApi.fetchMovieById(movieId).then(resp => {
-        setMovie(resp);
-        setStatus(Status.RESOLVED);
-      });
+      movieApi
+        .fetchMovieById(movieId, {
+          signal: abortController.signal,
+        })
+        .then(resp => {
+          setMovie(resp);
+          setStatus(Status.RESOLVED);
+        });
     } catch (error) {
       setStatus(Status.REJECTED);
       console.log("Houston, we've got a problem: ", error.message);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [movieId]);
 
   const handleBackButtonClick = () => {
-    history.push(location?.state?.from?.location || '/movies');
+    history.push(location?.state?.from?.location?.pathname ?? '/');
+    console.log({ history });
   };
 
   switch (status) {
@@ -87,12 +101,14 @@ export default function MovieDetailsPage() {
             </li>
           </ul>
 
-          <Route path={`${path}/cast`}>
-            <Cast />
-          </Route>
-          <Route path={`${path}/reviews`}>
-            <Reviews />
-          </Route>
+          <Suspense fallback={<Loader />}>
+            <Route path={`${path}/cast`}>
+              <Cast />
+            </Route>
+            <Route path={`${path}/reviews`}>
+              <Reviews />
+            </Route>
+          </Suspense>
         </Section>
       );
     case Status.REJECTED:

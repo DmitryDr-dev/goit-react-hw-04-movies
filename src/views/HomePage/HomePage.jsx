@@ -20,16 +20,26 @@ export default function HomePage() {
   const location = useLocation();
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     try {
       setStatus(Status.PENDING);
-      movieApi.fetchTrendingMovies().then(resp => {
-        setMovies(resp.results);
-        setStatus(Status.RESOLVED);
-      });
+      movieApi
+        .fetchTrendingMovies({
+          signal: abortController.signal,
+        })
+        .then(resp => {
+          setMovies(resp.results);
+          setStatus(Status.RESOLVED);
+        });
     } catch (error) {
       setStatus(Status.REJECTED);
       console.log("Houston, we've got a problem: ", error.message);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   switch (status) {

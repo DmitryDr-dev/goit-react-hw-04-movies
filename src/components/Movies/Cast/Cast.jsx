@@ -18,16 +18,26 @@ export default function Cast() {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     try {
       setStatus(Status.PENDING);
-      movieApi.fetchMovieCastById(movieId).then(resp => {
-        setCast(resp?.cast);
-        setStatus(Status.RESOLVED);
-      });
+      movieApi
+        .fetchMovieCastById(movieId, {
+          signal: abortController.signal,
+        })
+        .then(resp => {
+          setCast(resp?.cast);
+          setStatus(Status.RESOLVED);
+        });
     } catch (error) {
       setStatus(Status.REJECTED);
       console.log("Houston, we've got a problem: ", error.message);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [movieId]);
 
   switch (status) {

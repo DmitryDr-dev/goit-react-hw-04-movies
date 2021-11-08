@@ -1,47 +1,46 @@
 // packages import
 import { Switch, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 // components import
 import AppBar from './components/AppBar';
 
 // views import
-import HomePage from './views/HomePage';
-import MoviesPage from './views/MoviesPage';
-import MovieDetailsPage from './views/MovieDetailsPage';
+// import HomePage from './views/HomePage';
+// import MoviesPage from './views/MoviesPage';
+// import MovieDetailsPage from './views/MovieDetailsPage';
+import Loader from './components/Loader';
+
+const HomePage = lazy(() =>
+  import('./views/HomePage' /* webpackChunkName: "home"*/),
+);
+const MoviesPage = lazy(() =>
+  import('./views/MoviesPage' /* webpackChunkName: "movies"*/),
+);
+const MovieDetailsPage = lazy(() =>
+  import('./views/MovieDetailsPage' /* webpackChunkName: "movie-details"*/),
+);
 
 function App() {
   return (
     <>
       <AppBar />
 
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/movies" exact>
-          <MoviesPage />
-        </Route>
-        <Route path="/movies/:movieId">
-          <MovieDetailsPage />
-        </Route>
-      </Switch>
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/movies" exact>
+            <MoviesPage />
+          </Route>
+          <Route path="/movies/:movieId">
+            <MovieDetailsPage />
+          </Route>
+        </Switch>
+      </Suspense>
     </>
   );
 }
 
 export default App;
-
-// Routes
-// '/' - компонент <HomePage>, домашняя страница со списком популярных кинофильмов.
-// '/movies' - компонент <MoviesPage>, страница поиска фильмов по ключевому слову.
-// '/movies/:movieId' - компонент <MovieDetailsPage>, страница с детальной информацией о кинофильме.
-// /movies/:movieId/cast - компонент <Cast>, информация о актерском составе. Рендерится на странице <MovieDetailsPage>.
-// /movies/:movieId/reviews - компонент <Reviews>, информация об обзорах. Рендерится на странице <MovieDetailsPage>.
-
-// package import
-
-// styles import
-
-// components import
-
-// export default function name(){}

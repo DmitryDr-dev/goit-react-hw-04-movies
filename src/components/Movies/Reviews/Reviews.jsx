@@ -18,16 +18,26 @@ export default function Reviews() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     try {
       setStatus(Status.PENDING);
-      movieApi.fetchMovieReviewsById(movieId).then(resp => {
-        setReviews(resp?.results);
-        setStatus(Status.RESOLVED);
-      });
+      movieApi
+        .fetchMovieReviewsById(movieId, {
+          signal: abortController.signal,
+        })
+        .then(resp => {
+          setReviews(resp?.results);
+          setStatus(Status.RESOLVED);
+        });
     } catch (error) {
       setStatus(Status.REJECTED);
       console.log("Houston, we've got a problem: ", error.message);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [movieId]);
 
   switch (status) {

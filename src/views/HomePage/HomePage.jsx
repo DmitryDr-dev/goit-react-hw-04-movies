@@ -5,6 +5,7 @@ import movieApi from '../../services/themoviedbApi/themoviedbApi';
 import Hero from '../../components/Hero';
 import Loader from '../../components/Loader';
 import Section from '../../components/Section';
+import Container from '../../components/Container';
 
 const Status = {
   IDLE: 'idle',
@@ -43,22 +44,24 @@ export default function HomePage() {
         <>
           <Hero />
           <Section title="Trending Movies">
-            <ul>
-              {movies.map(movie => (
-                <li key={movie?.id}>
-                  <Link // to={`/movies/${movie?.id}`
-                    to={{
-                      pathname: `/movies/${movie?.id}`,
-                      state: {
-                        from: { location, label: `back to movies` },
-                      },
-                    }}
-                  >
-                    {movie?.original_title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <Container>
+              <ul>
+                {movies.map(movie => (
+                  <li key={movie?.id}>
+                    <Link // to={`/movies/${movie?.id}`
+                      to={{
+                        pathname: `/movies/${movie?.id}`,
+                        state: {
+                          from: { location, label: `back to movies` },
+                        },
+                      }}
+                    >
+                      {movie?.original_title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Container>
           </Section>
         </>
       );

@@ -21,11 +21,15 @@ export default function MovieInfo({ movie }) {
     <div className={styles.movieInfo}>
       <div className={styles.movieInfoImageWrap}>
         <img
-          srcSet={`https://image.tmdb.org/t/p/w154/${poster_path} 154w,
-        https://image.tmdb.org/t/p/w342/${poster_path} 342w,
-        https://image.tmdb.org/t/p/w500/${poster_path} 500w,
-        https://image.tmdb.org/t/p/w780/${poster_path} 780w,
-        https://image.tmdb.org/t/p/original/${poster_path} 2000w`}
+          srcSet={
+            poster_path
+              ? `https://image.tmdb.org/t/p/w154/${poster_path} 154w,
+                https://image.tmdb.org/t/p/w342/${poster_path} 342w,
+                https://image.tmdb.org/t/p/w500/${poster_path} 500w,
+                https://image.tmdb.org/t/p/w780/${poster_path} 780w,
+                https://image.tmdb.org/t/p/original/${poster_path} 2000w`
+              : 'https://via.placeholder.com/500x750'
+          }
           sizes="500px"
           src={
             poster_path

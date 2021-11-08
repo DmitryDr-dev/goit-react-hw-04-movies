@@ -55,15 +55,50 @@ async function fetchMovieById(id) {
   }
 }
 
+// function to fetch movie cast
+// https://developers.themoviedb.org/3/movies/get-movie-credits
+async function fetchMovieCastById(id) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/3/movie/${id}/credits?api_key=${API_KEY}`,
+    );
+
+    return response.ok
+      ? await response.json()
+      : Promise.reject(new Error('Not Found'));
+  } catch (error) {
+    console.log(
+      "We've got a problem with fetching movie cast: ",
+      error.message,
+    );
+  }
+}
+
+// function to fetch movie reviews
+// https://developers.themoviedb.org/3/movies/get-movie-reviews
+async function fetchMovieReviewsById(id) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/3/movie/${id}/reviews?api_key=${API_KEY}`,
+    );
+
+    return response.ok
+      ? await response.json()
+      : Promise.reject(new Error('Nothing Found'));
+  } catch (error) {
+    console.log(
+      "We've got a problem with fetching movie reviews: ",
+      error.message,
+    );
+  }
+}
+
 const movieApi = {
   fetchTrendingMovies,
   fetchMovieByName,
   fetchMovieById,
+  fetchMovieCastById,
+  fetchMovieReviewsById,
 };
 
 export default movieApi;
-
-// https://developers.themoviedb.org/3/search/search-movies - поиск кинофильма по ключевому слову на странице фильмов.
-// https://developers.themoviedb.org/3/movies/get-movie-details - запрос полной информации о фильме для страницы кинофильма.
-// https://developers.themoviedb.org/3/movies/get-movie-credits - запрос информации о актёрском составе для страницы кинофильма.
-// https://developers.themoviedb.org/3/movies/get-movie-reviews - запрос обзоров для страницы кинофильма.

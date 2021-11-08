@@ -1,0 +1,44 @@
+.movieInfo {
+  display: flex;
+  width: 100%;
+}
+
+.movieInfoImageWrap {
+  flex-basis: 40%;
+}
+.movieInfoPoster {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.movieInfoDescription {
+  flex-basis: 60%;
+}
+.movieInfoTitle {
+}
+.movieInfoYear {
+}
+.movieInfoTagLine {
+}
+.movieInfoRating {
+}
+.movieInfoRatingTitle {
+}
+.movieInfoRatingList {
+}
+.movieInfoRatingItem {
+}
+.movieInfoOverview {
+}
+.movieInfoOverviewTitle {
+}
+.movieInfoOverviewDescription {
+}
+.movieInfoGenres {
+}
+.movieInfoGenresTitle {
+}
+.movieInfoGenresList {
+}
+.movieInfoGenresItem {
+}

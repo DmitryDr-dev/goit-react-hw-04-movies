@@ -3,7 +3,6 @@ const BASE_URL = 'https://api.themoviedb.org';
 
 // function to fetch trending movies
 // https://developers.themoviedb.org/3/trending/get-trending
-
 async function fetchTrendingMovies() {
   try {
     const response = await fetch(
@@ -20,8 +19,46 @@ async function fetchTrendingMovies() {
   }
 }
 
+// function to fetch movie by name
+// https://developers.themoviedb.org/3/search/search-movies
+async function fetchMovieByName(query) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/3/search/movie?api_key=${API_KEY}&query=${query}`,
+    );
+    return response.ok
+      ? await response.json()
+      : Promise.reject(new Error('Not Found'));
+  } catch (error) {
+    console.log(
+      "We've got a problem with fetching movie by query: ",
+      error.message,
+    );
+  }
+}
+
+// function to fetch movie by id
+// https://developers.themoviedb.org/3/movies/get-movie-details
+async function fetchMovieById(id) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/3/movie/${id}?api_key=${API_KEY}`,
+    );
+    return response.ok
+      ? await response.json()
+      : Promise.reject(new Error('Not Found'));
+  } catch (error) {
+    console.log(
+      "We've got a problem with fetching movie by query: ",
+      error.message,
+    );
+  }
+}
+
 const movieApi = {
   fetchTrendingMovies,
+  fetchMovieByName,
+  fetchMovieById,
 };
 
 export default movieApi;

@@ -21,8 +21,10 @@ export default function HomePage() {
   useEffect(() => {
     try {
       setStatus(Status.PENDING);
-      movieApi.fetchTrendingMovies().then(resp => setMovies(resp.results));
-      setStatus(Status.RESOLVED);
+      movieApi.fetchTrendingMovies().then(resp => {
+        setMovies(resp.results);
+        setStatus(Status.RESOLVED);
+      });
     } catch (error) {
       setStatus(Status.REJECTED);
       console.log("Houston, we've got a problem: ", error.message);
@@ -35,7 +37,7 @@ export default function HomePage() {
     case Status.PENDING:
       return <Loader />;
     case Status.REJECTED:
-      return <h2>Houston, we've got a problem</h2>;
+      return <h2>Houston, we've got a problem. Nothing found for you</h2>;
     case Status.RESOLVED:
       return (
         <>

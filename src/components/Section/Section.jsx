@@ -10,6 +10,6 @@ export default function Section({ children, title }) {
 }
 
 Section.propTypes = {
-  children: PropTypes.object.isRequired,
+  // children: PropTypes.array.isRequired,
   title: PropTypes.string,
 };

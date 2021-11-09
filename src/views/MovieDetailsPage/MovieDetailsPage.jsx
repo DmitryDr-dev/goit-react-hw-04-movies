@@ -64,7 +64,7 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const handleBackButtonClick = () => {
-    history.push(location?.state?.from?.location?.pathname ?? '/');
+    history.push(location?.state?.from?.location || '/');
     console.log({ history });
   };
 

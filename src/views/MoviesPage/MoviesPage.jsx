@@ -23,9 +23,11 @@ export default function MoviesPage() {
   const location = useLocation();
   const history = useHistory();
 
+  console.log('location', location);
+  console.log('history', history);
+
   const formSubmitHandler = newQuery => {
     setSearchQuery(newQuery);
-    history.push({ ...location, search: `query=${newQuery}` });
   };
 
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function MoviesPage() {
           signal: abortController.signal,
         })
         .then(resp => {
+          history.push({ ...location, search: `query=${searchQuery}` });
           setMovies(resp.results);
           setStatus(Status.RESOLVED);
         });
